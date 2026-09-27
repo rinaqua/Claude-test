@@ -62,7 +62,7 @@
     s7b: '最後は、人と人とのつながり。',
     s8tag: 'Webの恩恵をすべての人に。',
     s8co: 'Web Aqua合同会社',
-    s8addr: '大阪市西区西本町',
+    s8addr: '大阪市北区梅田',
     s8url: 'web-aqua.jp',
   };
 
@@ -703,7 +703,7 @@
     }
   }
 
-  // S6: 19.0–23.0  歩み → 15年以上
+  // S6: 19.0–23.0  歩み → 17年以上
   function s6(ctx, t) {
     const u = t - 19;
     bg(ctx, t, { glow: 0.12, top: '#04173a' });
@@ -746,12 +746,12 @@
       });
       ctx.restore();
     }
-    // 15年以上
+    // 17年以上
     if (u >= 2.25) {
       const k = E.outExpo(prog(u, 2.25, 2.95));
-      const n = Math.round(15 * E.outCubic(prog(u, 2.25, 2.85)));
+      const n = Math.round(17 * E.outCubic(prog(u, 2.25, 2.85)));
       ctx.save();
-      const numW = measure(ctx, '15', 900, 300, EN), subW = measure(ctx, COPY.s6a, 900, 104, JP);
+      const numW = measure(ctx, '17', 900, 300, EN), subW = measure(ctx, COPY.s6a, 900, 104, JP);
       const total = numW + 24 + subW, sx = W / 2 - total / 2;
       ctx.globalAlpha = clamp(k * 1.5);
       ctx.translate(W / 2, 560); const sc = lerp(1.35, 1, k); ctx.scale(sc, sc); ctx.translate(-W / 2, -560);
@@ -996,7 +996,7 @@
     const all = Object.values(COPY).flat(3).join('') + '0123456789SINCEWebAquaDay';
     const loads = [];
     for (const w of [500, 700, 900]) loads.push(document.fonts.load(font(w, 40, JP), all));
-    for (const w of [600, 800, 900]) loads.push(document.fonts.load(font(w, 40, EN), 'Web Aqua 1Day SEO SINCE 2009 2017 2020 2023 15 web-aqua.jp PLANNING & PRODUCTION MAINTENANCE CONSULTING IN-HOUSE SUPPORT SEMINAR AI DEVELOPMENT'));
+    for (const w of [600, 800, 900]) loads.push(document.fonts.load(font(w, 40, EN), 'Web Aqua 1Day SEO SINCE 2009 2017 2020 2023 15 17 web-aqua.jp PLANNING & PRODUCTION MAINTENANCE CONSULTING IN-HOUSE SUPPORT SEMINAR AI DEVELOPMENT'));
     await Promise.all(loads);
     await document.fonts.ready;
     makeNoise();
