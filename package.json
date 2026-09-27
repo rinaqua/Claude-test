@@ -1,0 +1,15 @@
+{
+  "name": "web-aqua-30sec-cm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web Aqua合同会社 30秒 モーショングラフィックスCM",
+  "scripts": {
+    "audio": "python3 tools/audio.py",
+    "render": "node tools/render.cjs",
+    "build": "python3 tools/audio.py && node tools/render.cjs"
+  },
+  "dependencies": {
+    "@fontsource/montserrat": "^5.3.0",
+    "@fontsource/zen-kaku-gothic-new": "^5.3.0"
+  }
+}

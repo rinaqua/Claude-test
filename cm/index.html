@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Aqua 30秒CM</title>
+<link rel="stylesheet" href="../node_modules/@fontsource/zen-kaku-gothic-new/500.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/zen-kaku-gothic-new/700.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/zen-kaku-gothic-new/900.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/montserrat/600.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/montserrat/800.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/montserrat/900.css">
+<style>
+  html, body { margin: 0; background: #000; color: #cfe; font-family: sans-serif; }
+  body.render { overflow: hidden; }
+  #cv { display: block; width: 100%; max-width: 1920px; aspect-ratio: 16 / 9; margin: 0 auto; background: #020a18; }
+  body.render #cv { width: 1920px; height: 1080px; max-width: none; }
+  #ui { max-width: 1920px; margin: 8px auto; display: flex; gap: 12px; align-items: center; padding: 0 16px; }
+  body.render #ui { display: none; }
+  #seek { flex: 1; }
+  button { background: #0b3b5c; color: #fff; border: 0; padding: 6px 14px; border-radius: 6px; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="cv" width="1920" height="1080"></canvas>
+<div id="ui">
+  <button id="play">▶ 再生</button>
+  <input id="seek" type="range" min="0" max="30" step="0.0333" value="0">
+  <span id="tc">0.00s</span>
+</div>
+<audio id="bgm" src="../output/web-aqua-cm-audio.wav" preload="auto"></audio>
+<script src="cm.js"></script>
+<script>
+(async () => {
+  const render = new URLSearchParams(location.search).has('render');
+  if (render) document.body.classList.add('render');
+  await window.CM.ready();
+  const cv = document.getElementById('cv');
+  const ctx = cv.getContext('2d');
+  window.drawFrame = (t) => window.CM.draw(ctx, t);
+  window.drawFrame(0);
+  window.__ready = true;
+  if (render) return;
+
+  // プレビュー用プレイヤー
+  const seek = document.getElementById('seek'), tc = document.getElementById('tc');
+  const btn = document.getElementById('play'), bgm = document.getElementById('bgm');
+  let playing = false, t0 = 0, base = 0;
+  const loop = (now) => {
+    if (!playing) return;
+    let t = base + (now - t0) / 1000;
+    if (t >= 30) { t = 30; playing = false; btn.textContent = '▶ 再生'; }
+    seek.value = t; tc.textContent = t.toFixed(2) + 's';
+    window.drawFrame(Math.min(t, 29.999));
+    requestAnimationFrame(loop);
+  };
+  btn.onclick = () => {
+    playing = !playing;
+    btn.textContent = playing ? '❚❚ 停止' : '▶ 再生';
+    if (playing) {
+      base = +seek.value >= 29.9 ? 0 : +seek.value;
+      t0 = performance.now();
+      bgm.currentTime = base; bgm.play().catch(() => {});
+      requestAnimationFrame(loop);
+    } else bgm.pause();
+  };
+  seek.oninput = () => {
+    playing = false; bgm.pause(); btn.textContent = '▶ 再生';
+    tc.textContent = (+seek.value).toFixed(2) + 's';
+    window.drawFrame(Math.min(+seek.value, 29.999));
+  };
+})();
+</script>
+</body>
+</html>
