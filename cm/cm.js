@@ -344,22 +344,23 @@
   }
 
   // 液体ワイプ(帯状の波が画面を覆って抜ける)
-  function waveBand(ctx, t, tc, angle, d = 0.45) {
+  function waveBand(ctx, t, tc, angle, d = 0.34) {
     if (t < tc - d - 0.2 || t > tc + d + 0.25) return;
     const L = 2300;
     const layers = [
-      { col: C.aqua, lead: 0.14 },
-      { col: C.blue, lead: 0.07 },
-      { col: C.deep, lead: 0.0 },
+      { col: C.deep, lead: 0.12 },
+      { col: C.aqua, lead: 0.06 },
+      { col: C.blue, lead: 0.0 },
     ];
     ctx.save();
     ctx.translate(W / 2, H / 2); ctx.rotate(angle);
     for (let li = 0; li < layers.length; li++) {
       const Ly = layers[li];
-      const kIn = E.inOutCubic(prog(t, tc - d - Ly.lead, tc - Ly.lead * 0.2));
-      const kOut = E.inOutCubic(prog(t, tc + (0.14 - Ly.lead), tc + d + (0.14 - Ly.lead)));
-      const top = lerp(L / 2 + 200, -L / 2 - 200, kIn);
-      const bot = lerp(L / 2 + 200, -L / 2 - 200, kOut);
+      const kIn = E.inCubic(prog(t, tc - d - Ly.lead, tc - Ly.lead * 0.3));
+      const kOut = E.outCubic(prog(t, tc + Ly.lead * 0.6, tc + d + Ly.lead * 0.6));
+      const ext = (Math.abs(Math.sin(angle)) > 0.5 ? W : H) / 2 + 150;
+      const top = lerp(ext, -ext, kIn);
+      const bot = lerp(ext, -ext, kOut);
       if (bot - top < 1) continue;
       const wv = (x, base, ph) => base + Math.sin(x * 0.0042 + t * 7 + ph) * 38 + Math.sin(x * 0.011 - t * 5 + ph * 1.7) * 16 + x * 0.06;
       ctx.beginPath();
@@ -367,7 +368,7 @@
       for (let x = L / 2; x >= -L / 2; x -= 40) ctx.lineTo(x, wv(x, bot, li + 3));
       ctx.closePath();
       ctx.fillStyle = Ly.col;
-      if (li === 0) { ctx.shadowColor = 'rgba(46,230,240,0.8)'; ctx.shadowBlur = 40; } else ctx.shadowBlur = 0;
+      if (li > 0) { ctx.shadowColor = 'rgba(46,230,240,0.7)'; ctx.shadowBlur = 40; } else ctx.shadowBlur = 0;
       ctx.fill();
     }
     ctx.restore();
