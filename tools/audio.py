@@ -314,6 +314,9 @@ add(riser(1.8, 150, 4200), 24.7, gain=0.9, rev=0.3)
 add(impact(3.0), 26.5, gain=1.0, rev=0.5)
 add(shimmer(3.2), 26.5, gain=1.3, rev=0.7)
 add(drop(), 26.5, gain=0.6, rev=0.9)
+# ロゴを書くペンの軌跡
+add(whoosh(1.1), 26.95, gain=0.45, pan=-0.3, rev=0.4)
+add(shimmer(2.0), 28.05, gain=0.9, rev=0.6)
 
 # ------------------------------------------------------------------ リバーブ(Schroeder)
 def reverb(x):
