@@ -23,8 +23,8 @@
 
   // ---------------------------------------------------------------- copy
   const COPY = {
-    s1a: 'あなたのホームページに、',
-    s1b: 'お客様は、喜んで訪れていますか？',
+    s1a: 'あなたのホームページ、',
+    s1b: 'AIからおすすめされていますか？',
     s2q: '集客できるホームページ',
     s2a: '検索にも、AIにも。',
     s2b: '見つけてもらえるホームページへ。',
@@ -60,7 +60,7 @@
     s6b: 'ITが苦手な事業者のWebマーケティングを支援。',
     s7a: 'AIが登場しても、',
     s7b: '最後は、人と人とのつながり。',
-    s8tag: 'お客様が喜んで訪れるホームページを。',
+    s8tag: 'Webの恩恵をすべての人に。',
     s8co: 'Web Aqua合同会社',
     s8addr: '大阪市西区西本町',
     s8url: 'web-aqua.jp',
@@ -407,7 +407,7 @@
     sparks(ctx, cx, cy, t, tImp, { n: 30, life: 0.9, speed: 820, gravity: 1400, seed: 5 });
     // 問いかけ
     kt(ctx, COPY.s1a, W / 2, 470, { t, t0: 1.0, size: 62, weight: 700, color: C.mute, out: 3.05, mask: true });
-    kt(ctx, COPY.s1b, W / 2, 610, { t, t0: 1.45, size: 96, weight: 900, hl: [5, 11], st: 0.04, out: 3.1, mask: true });
+    kt(ctx, COPY.s1b, W / 2, 610, { t, t0: 1.45, size: 96, weight: 900, hl: [0, 8], st: 0.04, out: 3.1, mask: true });
   }
 
   // S2: 3.5–7.5  検索 → AI SEO
@@ -895,7 +895,7 @@
         }
       }
     }
-    kt(ctx, COPY.s8tag, W / 2, 668, { t, t0: 27.55, size: 56, weight: 900, color: C.white, st: 0.028, mask: true });
+    kt(ctx, COPY.s8tag, W / 2, 672, { t, t0: 27.55, size: 64, weight: 900, color: C.white, st: 0.028, mask: true });
     ctx.restore();
     // 区切り線
     const lk = E.outExpo(prog(u, 1.4, 2.0));
